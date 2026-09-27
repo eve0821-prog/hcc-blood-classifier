@@ -1,5 +1,3 @@
-cd ~/hcc-project
-cat > README.md << 'EOF'
 # Blood Gene Classifier for Hepatocellular Carcinoma (HCC)
 
 A student passion project exploring whether blood gene expression
@@ -77,7 +75,6 @@ python3 two_gene_classifier.py              # final 2-gene model
 pip install combat
 python3 cross_dataset_with_combat.py
 ```
-
 Downloads are cached in a local `data/` folder after the first run.
 
 ## Data sources
@@ -161,8 +158,3 @@ EOF
 - [ ] Test on a third, independent dataset
 - [ ] Write up as a short research paper
 - [ ] Explore relevance to liver cancer / hepatitis B burden in Mongolia
-head -1 README.md
-tail -1 README.md
-git add README.md
-git commit -m "Clarify optional ComBat step in README"
-git push
