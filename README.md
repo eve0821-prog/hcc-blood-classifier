@@ -63,13 +63,17 @@ generalize far better than an automatically-selected multi-gene model.
 ```bash
 python3 -m venv venv
 source venv/bin/activate
-pip install GEOparse pandas numpy scikit-learn combat
+pip install GEOparse pandas numpy scikit-learn
 
 python3 hcc_blood_classifier.py --inspect   # look at sample labels first
 python3 hcc_blood_classifier.py             # train + cross-validate
 python3 cross_dataset_validation.py         # honest cross-dataset test
 python3 check_published_markers.py          # check FLNA/CLU/CAP1 direction
 python3 two_gene_classifier.py              # final 2-gene model
+
+# Optional (exploratory -- did not fix the cross-dataset problem here):
+pip install combat
+python3 cross_dataset_with_combat.py
 ```
 
 Downloads are cached in a local `data/` folder after the first run.
