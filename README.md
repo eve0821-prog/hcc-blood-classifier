@@ -1,3 +1,5 @@
+cd ~/hcc-project
+cat > README.md << 'EOF'
 # Blood Gene Classifier for Hepatocellular Carcinoma (HCC)
 
 A student passion project exploring whether blood gene expression
@@ -63,13 +65,17 @@ generalize far better than an automatically-selected multi-gene model.
 ```bash
 python3 -m venv venv
 source venv/bin/activate
-pip install GEOparse pandas numpy scikit-learn combat
+pip install GEOparse pandas numpy scikit-learn
 
 python3 hcc_blood_classifier.py --inspect   # look at sample labels first
 python3 hcc_blood_classifier.py             # train + cross-validate
 python3 cross_dataset_validation.py         # honest cross-dataset test
 python3 check_published_markers.py          # check FLNA/CLU/CAP1 direction
 python3 two_gene_classifier.py              # final 2-gene model
+
+# Optional (exploratory -- did not fix the cross-dataset problem here):
+pip install combat
+python3 cross_dataset_with_combat.py
 ```
 
 Downloads are cached in a local `data/` folder after the first run.
@@ -114,3 +120,49 @@ Downloads are cached in a local `data/` folder after the first run.
 - [ ] Test on a third, independent dataset
 - [ ] Write up as a short research paper
 - [ ] Explore relevance to liver cancer / hepatitis B burden in Mongolia
+EOF
+## Data sources
+
+- GSE58208 — Hui, K.M. *Gene expression profiling of PBMC from normal
+  individuals, chronic hepatitis B carriers and hepatocellular
+  carcinoma patients.* NCBI GEO (2014).
+- GSE49515 — Hui, K.M. *Expression profiling of PBMC from patients
+  with hepatocellular carcinoma.* NCBI GEO (2013).
+
+## Key references
+
+- Puttipanyalears, C. *et al.* The expression of FLNA and CLU in
+  PBMCs as a novel screening marker for hepatocellular carcinoma.
+  *Sci Rep* **11**, 14969 (2021).
+  https://doi.org/10.1038/s41598-021-94330-1
+- Leek, J.T. *et al.* Tackling the widespread and critical impact of
+  batch effects in high-throughput data. *Nat Rev Genet* **11**,
+  733–739 (2010).
+- Johnson, W.E., Li, C. & Rabinovic, A. Adjusting batch effects in
+  microarray expression data using empirical Bayes methods.
+  *Biostatistics* **8**, 118–127 (2007). (the ComBat method)
+
+## Limitations
+
+- Sample sizes are small (15–20 samples per cross-dataset test).
+  Results should be treated as preliminary, not clinical-grade.
+- Both public datasets are from populations outside Mongolia. Results
+  may not directly transfer; local validation would be needed before
+  any clinical use.
+- This is exploratory/educational work, not a diagnostic tool.
+
+## Status / next steps
+
+- [x] Data pipeline (download, label, clean)
+- [x] Within-dataset classifier
+- [x] Honest cross-dataset validation
+- [x] Batch-effect investigation (ComBat)
+- [x] Validated 2-gene model (FLNA + CLU)
+- [ ] Test on a third, independent dataset
+- [ ] Write up as a short research paper
+- [ ] Explore relevance to liver cancer / hepatitis B burden in Mongolia
+head -1 README.md
+tail -1 README.md
+git add README.md
+git commit -m "Clarify optional ComBat step in README"
+git push
